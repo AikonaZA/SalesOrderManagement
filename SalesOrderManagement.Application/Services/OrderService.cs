@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using SalesOrderManagement.Application.DTOs;
+using SalesOrderManagement.Application.DTOs.Order;
+using SalesOrderManagement.Application.DTOs.SalesOrder;
 using SalesOrderManagement.Application.Interfaces;
 using SalesOrderManagement.Core.Interfaces;
 using SalesOrderManagement.Core.Models.Domain;
@@ -40,6 +41,26 @@ namespace SalesOrderManagement.Application.Services
             }
 
             var order = _mapper.Map<Order>(orderDto);
+            await _orderRepository.CreateOrderAsync(order);
+        }
+
+        // Handles DTO to domain model mapping and adds the order
+        public async Task AddSalesOrderAsync(SalesOrderRequestDto salesOrderRequestDto)
+        {
+            // Check if the sales order or its reference is null or empty
+            if (salesOrderRequestDto.SalesOrder == null)
+            {
+                throw new ArgumentException("SalesOrder cannot be null.");
+            }
+
+            // Check if the SalesOrderRef is null or empty
+            if (string.IsNullOrEmpty(salesOrderRequestDto.SalesOrder.SalesOrderRef))
+            {
+                throw new ArgumentException("Order reference cannot be empty.");
+            }
+
+            // Map DTO to the domain model and create the order
+            var order = _mapper.Map<Order>(salesOrderRequestDto.SalesOrder);
             await _orderRepository.CreateOrderAsync(order);
         }
 
