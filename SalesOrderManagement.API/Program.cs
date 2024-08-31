@@ -1,4 +1,5 @@
 using SalesOrderManagement.Application.Extensions;
+using SalesOrderManagement.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +9,7 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 
 // Register services for each layer using extensions
 builder.Services.AddApplicationLayer();
+builder.Services.AddInfrastructureLayer(connectionString);
 
 // Add controllers
 builder.Services.AddControllers();

@@ -13,6 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SalesOrderManagement.Application\SalesOrderManagement.Application.csproj" />
     <ProjectReference Include="..\SalesOrderManagement.Core\SalesOrderManagement.Core.csproj" />
+    <ProjectReference Include="..\SalesOrderManagement.Infrastructure\SalesOrderManagement.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
