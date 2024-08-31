@@ -1,15 +1,21 @@
 ﻿using AutoMapper;
-using SalesOrderManagement.Application.DTOs;
+using SalesOrderManagement.Application.DTOs.SalesOrder;
 using SalesOrderManagement.Core.Models.Domain;
+using SalesOrderLine = SalesOrderManagement.Application.DTOs.SalesOrder.SalesOrderLineDto;
 
-namespace SalesOrderManagement.Application.Mappings
+public class MappingProfile : Profile
 {
-    public class MappingProfile : Profile
+    public MappingProfile()
     {
-        public MappingProfile()
-        {
-            CreateMap<Order, OrderDto>().ReverseMap();
-            CreateMap<OrderLine, OrderLineDto>().ReverseMap();
-        }
+        // Map SalesOrderRequestDto to Order domain model
+        CreateMap<SalesOrderDto, Order>()
+            .ForMember(dest => dest.OrderRef, opt => opt.MapFrom(src => src.SalesOrderRef))
+            .ForMember(dest => dest.OrderLines, opt => opt.MapFrom(src => src.OrderLines))
+            .ReverseMap();
+
+        CreateMap<SalesOrderLine, OrderLine>()
+            .ForMember(dest => dest.Sku, opt => opt.MapFrom(src => src.SkuCode))
+            .ForMember(dest => dest.Qty, opt => opt.MapFrom(src => src.Quantity))
+            .ReverseMap();
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace SalesOrderManagement.Application.DTOs
+﻿namespace SalesOrderManagement.Application.DTOs.Order
 {
     public class OrderLineDto
     {

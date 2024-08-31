@@ -1,4 +1,5 @@
-﻿using SalesOrderManagement.Application.DTOs;
+﻿using SalesOrderManagement.Application.DTOs.Order;
+using SalesOrderManagement.Application.DTOs.SalesOrder;
 
 namespace SalesOrderManagement.Application.Interfaces
 {
@@ -13,5 +14,7 @@ namespace SalesOrderManagement.Application.Interfaces
         Task ModifyOrderAsync(OrderDto order);
 
         Task RemoveOrderAsync(int id);
+
+        Task AddSalesOrderAsync(SalesOrderRequestDto salesOrderRequestDto);
     }
 }

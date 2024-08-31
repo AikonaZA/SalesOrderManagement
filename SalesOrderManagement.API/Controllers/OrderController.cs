@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SalesOrderManagement.Application.DTOs;
+using SalesOrderManagement.Application.DTOs.Order;
 using SalesOrderManagement.Application.Interfaces;
 
 namespace SalesOrderManagement.API.Controllers
