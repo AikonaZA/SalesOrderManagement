@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SalesOrderManagement.Application.DTOs;
 using SalesOrderManagement.Application.Interfaces;
-using SalesOrderManagement.Core.Interfaces;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace SalesOrderManagement.API.Controllers
 {

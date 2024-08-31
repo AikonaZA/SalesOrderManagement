@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SalesOrderManagement.Core.Models.Domain
+﻿namespace SalesOrderManagement.Core.Models.Domain
 {
     public class OrderLine
     {
@@ -14,5 +8,4 @@ namespace SalesOrderManagement.Core.Models.Domain
         public string Description { get; set; }
         public int OrderId { get; set; } // Foreign key to Order
     }
-
 }

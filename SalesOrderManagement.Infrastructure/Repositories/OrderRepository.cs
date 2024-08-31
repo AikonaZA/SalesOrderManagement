@@ -39,7 +39,7 @@ namespace SalesOrderManagement.Infrastructure.Repositories
         {
             using (var connection = new SqlConnection(_connectionString))
             {
-                string sql = @"INSERT INTO Orders (OrderRef, OrderDate, Currency, ShipDate, CategoryCode) 
+                string sql = @"INSERT INTO Orders (OrderRef, OrderDate, Currency, ShipDate, CategoryCode)
                                VALUES (@OrderRef, @OrderDate, @Currency, @ShipDate, @CategoryCode)";
                 await connection.ExecuteAsync(sql, order);
             }
@@ -49,9 +49,9 @@ namespace SalesOrderManagement.Infrastructure.Repositories
         {
             using (var connection = new SqlConnection(_connectionString))
             {
-                string sql = @"UPDATE Orders 
-                               SET OrderRef = @OrderRef, OrderDate = @OrderDate, Currency = @Currency, 
-                                   ShipDate = @ShipDate, CategoryCode = @CategoryCode 
+                string sql = @"UPDATE Orders
+                               SET OrderRef = @OrderRef, OrderDate = @OrderDate, Currency = @Currency,
+                                   ShipDate = @ShipDate, CategoryCode = @CategoryCode
                                WHERE Id = @Id";
                 await connection.ExecuteAsync(sql, order);
             }

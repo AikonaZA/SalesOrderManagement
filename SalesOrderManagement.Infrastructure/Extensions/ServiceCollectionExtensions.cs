@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using SalesOrderManagement.Core.Interfaces;
-using SalesOrderManagement.Infrastructure.Data;
 using SalesOrderManagement.Infrastructure.Repositories;
 
 namespace SalesOrderManagement.Infrastructure.Extensions

@@ -10,7 +10,6 @@ namespace SalesOrderManagement.Application.Extensions
         // Extension method to add application services, repositories, and other configurations
         public static IServiceCollection AddApplicationLayer(this IServiceCollection services)
         {
-
             // Register AutoMapper with the mapping profiles
             services.AddAutoMapper(typeof(MappingProfile));
 

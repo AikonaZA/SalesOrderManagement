@@ -1,5 +1,4 @@
 ﻿using SalesOrderManagement.Application.DTOs;
-using SalesOrderManagement.Core.Models.Domain;
 
 namespace SalesOrderManagement.Application.Interfaces
 {

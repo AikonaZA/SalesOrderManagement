@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SalesOrderManagement.Core.Models.Domain
+﻿namespace SalesOrderManagement.Core.Models.Domain
 {
     public class Order
     {
@@ -16,5 +10,4 @@ namespace SalesOrderManagement.Core.Models.Domain
         public string CategoryCode { get; set; }
         public List<OrderLine> OrderLines { get; set; } = new List<OrderLine>();
     }
-
 }

@@ -1,10 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SalesOrderManagement.Core.Models;
 using SalesOrderManagement.Core.Models.Domain;
-using System.Collections.Generic;
-using System.Reflection.Emit;
 
-namespace SalesOrderManagement.Infrastructure.Data
+namespace SalesOrderManagement.Infrastructure
 {
     public class SalesOrderDbContext : DbContext
     {
