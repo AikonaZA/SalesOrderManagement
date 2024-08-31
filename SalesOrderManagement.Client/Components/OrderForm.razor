@@ -1,0 +1,31 @@
+﻿@page "/orders/new"
+@inject HttpClient Http
+
+<h3>Create New Order</h3>
+
+<EditForm Model="newOrder" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="mb-3">
+        <label for="orderRef" class="form-label">Order Reference</label>
+        <InputText id="orderRef" class="form-control" @bind-Value="newOrder.OrderRef" />
+    </div>
+
+    <div class="mb-3">
+        <label for="orderDate" class="form-label">Order Date</label>
+        <InputDate id="orderDate" class="form-control" @bind-Value="newOrder.OrderDate" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</EditForm>
+
+@code {
+    private OrderDto newOrder = new OrderDto();
+
+    private async Task HandleValidSubmit()
+    {
+        await Http.PostAsJsonAsync("api/order", newOrder);
+        // Redirect to the order list or show a success message
+    }
+}

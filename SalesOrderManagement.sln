@@ -23,6 +23,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04 API", "04 API", "{DA0590
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "05 UI", "05 UI", "{50B7F2DA-F5D2-43D4-AFDA-FE728793F1E0}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{90BC258F-47CE-4A7A-96FB-6559F459C678}"
+	ProjectSection(SolutionItems) = preProject
+		Sales Order Management.md = Sales Order Management.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
