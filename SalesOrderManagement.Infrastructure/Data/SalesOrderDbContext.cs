@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SalesOrderManagement.Core.Models.Domain;
 
-namespace SalesOrderManagement.Infrastructure
+namespace SalesOrderManagement.Infrastructure.Data
 {
     public class SalesOrderDbContext : DbContext
     {
@@ -14,7 +14,6 @@ namespace SalesOrderManagement.Infrastructure
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Configure relationships, keys, etc.
             modelBuilder.Entity<Order>()
                 .HasMany(o => o.OrderLines)
                 .WithOne()

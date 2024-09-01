@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using SalesOrderManagement.Application.Interfaces;
+using SalesOrderManagement.Application.Mappings;
 using SalesOrderManagement.Application.Services;
 
 namespace SalesOrderManagement.Application.Extensions
