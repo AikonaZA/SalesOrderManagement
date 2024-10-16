@@ -1,7 +1,10 @@
+using SalesOrderManagement;
 using SalesOrderManagement.Application.Extensions;
 using SalesOrderManagement.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.AddServiceDefaults();
 
 // Add services to the container.
 // Get the connection string from configuration
@@ -19,6 +22,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+app.MapDefaultEndpoints();
 
 // Configure middleware
 // Configure the HTTP request pipeline.
