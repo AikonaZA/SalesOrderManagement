@@ -6,20 +6,14 @@ namespace SalesOrderManagement.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class OrderController : ControllerBase
+    public class OrderController(IOrderService orderService) : ControllerBase
     {
-        private readonly IOrderService _orderService;
-
-        public OrderController(IOrderService orderService)
-        {
-            _orderService = orderService;
-        }
 
         // GET: api/order
         [HttpGet]
         public async Task<ActionResult<IEnumerable<OrderDto>>> GetOrders()
         {
-            var orders = await _orderService.GetAllOrdersAsync();
+            var orders = await orderService.GetAllOrdersAsync();
             return Ok(orders);
         }
 
@@ -27,7 +21,7 @@ namespace SalesOrderManagement.API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<OrderDto>> GetOrder(int id)
         {
-            var order = await _orderService.GetOrderDetailsAsync(id);
+            var order = await orderService.GetOrderDetailsAsync(id);
             return order == null ? (ActionResult<OrderDto>)NotFound() : (ActionResult<OrderDto>)Ok(order);
         }
 
@@ -35,7 +29,7 @@ namespace SalesOrderManagement.API.Controllers
         [HttpPost]
         public async Task<ActionResult> CreateOrder(OrderDto orderDto)
         {
-            await _orderService.AddOrderAsync(orderDto);
+            await orderService.AddOrderAsync(orderDto);
             return CreatedAtAction(nameof(GetOrder), new { id = orderDto.OrderRef }, orderDto);
         }
 
@@ -48,7 +42,7 @@ namespace SalesOrderManagement.API.Controllers
                 return BadRequest("Order reference mismatch.");
             }
 
-            await _orderService.ModifyOrderAsync(orderDto);
+            await orderService.ModifyOrderAsync(orderDto);
             return NoContent();
         }
 
@@ -56,7 +50,7 @@ namespace SalesOrderManagement.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteOrder(int id)
         {
-            await _orderService.RemoveOrderAsync(id);
+            await orderService.RemoveOrderAsync(id);
             return NoContent();
         }
     }

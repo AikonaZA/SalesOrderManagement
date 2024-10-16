@@ -7,29 +7,21 @@ using SalesOrderManagement.Core.Models.Domain;
 
 namespace SalesOrderManagement.Application.Services
 {
-    public class OrderService : IOrderService
+    public class OrderService(IOrderRepository orderRepository, IMapper mapper) : IOrderService
     {
-        private readonly IOrderRepository _orderRepository;
-        private readonly IMapper _mapper;
-
-        public OrderService(IOrderRepository orderRepository, IMapper mapper)
-        {
-            _orderRepository = orderRepository;
-            _mapper = mapper;
-        }
 
         // Returns DTOs by mapping domain models to DTOs
         public async Task<IEnumerable<OrderDto>> GetAllOrdersAsync()
         {
-            var orders = await _orderRepository.GetOrdersAsync();
-            return _mapper.Map<IEnumerable<OrderDto>>(orders);
+            var orders = await orderRepository.GetOrdersAsync();
+            return mapper.Map<IEnumerable<OrderDto>>(orders);
         }
 
         // Returns a single DTO for order details
         public async Task<OrderDto> GetOrderDetailsAsync(int id)
         {
-            var order = await _orderRepository.GetOrderByIdAsync(id);
-            return _mapper.Map<OrderDto>(order);
+            var order = await orderRepository.GetOrderByIdAsync(id);
+            return mapper.Map<OrderDto>(order);
         }
 
         // Handles DTO to domain model mapping and adds the order
@@ -40,8 +32,8 @@ namespace SalesOrderManagement.Application.Services
                 throw new ArgumentException("Order reference cannot be empty");
             }
 
-            var order = _mapper.Map<Order>(orderDto);
-            await _orderRepository.CreateOrderAsync(order);
+            var order = mapper.Map<Order>(orderDto);
+            await orderRepository.CreateOrderAsync(order);
         }
 
         // Handles DTO to domain model mapping and adds the order
@@ -60,27 +52,27 @@ namespace SalesOrderManagement.Application.Services
             }
 
             // Map DTO to the domain model and create the order
-            var order = _mapper.Map<Order>(salesOrderRequestDto.SalesOrder);
-            await _orderRepository.CreateOrderAsync(order);
+            var order = mapper.Map<Order>(salesOrderRequestDto.SalesOrder);
+            await orderRepository.CreateOrderAsync(order);
         }
 
         // Handles modification of the order using the DTO
         public async Task ModifyOrderAsync(OrderDto orderDto)
         {
-            var order = _mapper.Map<Order>(orderDto);
-            var existingOrder = await _orderRepository.GetOrderByIdAsync(order.Id);
+            var order = mapper.Map<Order>(orderDto);
+            var existingOrder = await orderRepository.GetOrderByIdAsync(order.Id);
             if (existingOrder == null)
             {
                 throw new KeyNotFoundException("Order not found");
             }
 
-            await _orderRepository.UpdateOrderAsync(order);
+            await orderRepository.UpdateOrderAsync(order);
         }
 
         // Removes the order based on its ID
         public async Task RemoveOrderAsync(int id)
         {
-            await _orderRepository.DeleteOrderAsync(id);
+            await orderRepository.DeleteOrderAsync(id);
         }
     }
 }

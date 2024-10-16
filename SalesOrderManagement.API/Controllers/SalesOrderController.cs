@@ -6,20 +6,14 @@ namespace SalesOrderManagement.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class SalesOrderController : ControllerBase
+    public class SalesOrderController(ISalesOrderService salesOrderService) : ControllerBase
     {
-        private readonly ISalesOrderService _salesOrderService;
-
-        public SalesOrderController(ISalesOrderService salesOrderService)
-        {
-            _salesOrderService = salesOrderService;
-        }
 
         // POST: api/salesorder
         [HttpPost]
         public async Task<IActionResult> CreateSalesOrder([FromBody] SalesOrderRequestDto salesOrderRequestDto)
         {
-            await _salesOrderService.AddSalesOrderAsync(salesOrderRequestDto);
+            await salesOrderService.AddSalesOrderAsync(salesOrderRequestDto);
             return CreatedAtAction(nameof(GetSalesOrderById), new { id = salesOrderRequestDto.SalesOrder.SalesOrderRef }, salesOrderRequestDto);
         }
 
@@ -27,7 +21,7 @@ namespace SalesOrderManagement.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<SalesOrderDto>>> GetAllSalesOrders()
         {
-            var salesOrders = await _salesOrderService.GetAllSalesOrdersAsync();
+            var salesOrders = await salesOrderService.GetAllSalesOrdersAsync();
             return Ok(salesOrders);
         }
 
@@ -35,7 +29,7 @@ namespace SalesOrderManagement.API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<SalesOrderDto>> GetSalesOrderById(int id)
         {
-            var salesOrder = await _salesOrderService.GetSalesOrderByIdAsync(id);
+            var salesOrder = await salesOrderService.GetSalesOrderByIdAsync(id);
             return salesOrder == null ? (ActionResult<SalesOrderDto>)NotFound() : (ActionResult<SalesOrderDto>)Ok(salesOrder);
         }
     }

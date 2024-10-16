@@ -3,12 +3,8 @@ using SalesOrderManagement.Core.Models.Domain;
 
 namespace SalesOrderManagement.Infrastructure.Data
 {
-    public class SalesOrderDbContext : DbContext
+    public class SalesOrderDbContext(DbContextOptions<SalesOrderDbContext> options) : DbContext(options)
     {
-        public SalesOrderDbContext(DbContextOptions<SalesOrderDbContext> options) : base(options)
-        {
-        }
-
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderLine> OrderLines { get; set; }
 
