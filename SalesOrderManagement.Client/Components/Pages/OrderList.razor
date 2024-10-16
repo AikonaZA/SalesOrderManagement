@@ -1,0 +1,30 @@
+﻿@page "/orders"
+
+@inject HttpClient Http
+@inject NotificationService notification
+
+<h3>Order List</h3>
+
+<div>
+    <RadzenDataGrid Data="@orders" TItem="OrderDto"
+                    AllowSorting="true" AllowColumnResize="true"
+                    AllowFiltering="true" FilterMode="FilterMode.CheckBoxList"
+                    AllowPaging="true" PageSize="10">
+        <Columns>
+            <RadzenDataGridColumn TItem="OrderDto" Property="OrderRef" Title="Order Ref" />
+            <RadzenDataGridColumn TItem="OrderDto" Property="OrderDate" Title="Order Date" FormatString="{0:MM/dd/yyyy}" />
+            <RadzenDataGridColumn TItem="OrderDto" Property="Currency" Title="Currency" />
+            <RadzenDataGridColumn TItem="OrderDto" Property="CategoryCode" Title="Category" />
+            <RadzenDataGridColumn TItem="OrderDto" Title="Actions" Filterable="false">
+                <Template Context="order">
+                    <RadzenButton Text="Edit" Click="@(args => EditOrder(order))"
+                                  Icon="edit" Style="margin-right: 10px;" />
+                    <RadzenButton Text="Delete" Click="@(args => DeleteOrder(order.Id))"
+                                  Icon="delete" ButtonStyle="ButtonStyle.Danger" />
+                </Template>
+            </RadzenDataGridColumn>
+        </Columns>
+    </RadzenDataGrid>
+</div>
+
+<RadzenNotification />

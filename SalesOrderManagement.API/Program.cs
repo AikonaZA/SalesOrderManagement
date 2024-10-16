@@ -1,6 +1,6 @@
-using SalesOrderManagement;
 using SalesOrderManagement.Application.Extensions;
 using SalesOrderManagement.Infrastructure.Extensions;
+using SalesOrderManagement.ServiceDefaults;
 
 var builder = WebApplication.CreateBuilder(args);
 

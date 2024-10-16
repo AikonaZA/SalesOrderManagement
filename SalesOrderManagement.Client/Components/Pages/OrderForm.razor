@@ -1,0 +1,22 @@
+﻿@page "/orders/new"
+
+@inject HttpClient Http
+@inject NotificationService notification
+
+<h3>Create New Order</h3>
+
+<RadzenTemplateForm Data="@newOrder" TItem="OrderDto" Submit="@HandleValidSubmit">
+    <RadzenFieldset Text="Order Details">
+        <RadzenTextBox @bind-Value="newOrder.OrderRef" Name="OrderRef" Placeholder="Enter Order Reference" />
+        <RadzenRequiredValidator Component="OrderRef" Text="Order Reference is required" />
+        <br />
+
+        <RadzenDatePicker @bind-Value="newOrder.OrderDate" Name="OrderDate" Placeholder="Select Order Date" />
+        <RadzenRequiredValidator Component="OrderDate" Text="Order Date is required" />
+    </RadzenFieldset>
+
+    <RadzenButton Text="Submit" ButtonType="ButtonType.Submit" Class="btn btn-primary" />
+</RadzenTemplateForm>
+
+<RadzenNotification />
+
