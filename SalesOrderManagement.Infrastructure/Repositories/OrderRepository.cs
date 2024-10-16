@@ -10,7 +10,7 @@ namespace SalesOrderManagement.Infrastructure.Repositories
     public class OrderRepository : IOrderRepository, IDisposable
     {
         private readonly string _connectionString;
-        private SqliteConnection _connection; // Manage the SQLite connection instance
+        private readonly SqliteConnection _connection; // Manage the SQLite connection instance
         private bool _disposed = false; // Track whether the object has been disposed
 
         public OrderRepository(IConfiguration configuration)

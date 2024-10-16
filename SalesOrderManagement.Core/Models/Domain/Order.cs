@@ -8,6 +8,6 @@
         public string Currency { get; set; }
         public DateTime ShipDate { get; set; }
         public string CategoryCode { get; set; }
-        public List<OrderLine> OrderLines { get; set; } = new List<OrderLine>();
+        public List<OrderLine> OrderLines { get; set; } = [];
     }
 }

@@ -28,11 +28,7 @@ namespace SalesOrderManagement.API.Controllers
         public async Task<ActionResult<OrderDto>> GetOrder(int id)
         {
             var order = await _orderService.GetOrderDetailsAsync(id);
-            if (order == null)
-            {
-                return NotFound();
-            }
-            return Ok(order);
+            return order == null ? (ActionResult<OrderDto>)NotFound() : (ActionResult<OrderDto>)Ok(order);
         }
 
         // POST: api/order

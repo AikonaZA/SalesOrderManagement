@@ -36,11 +36,7 @@ namespace SalesOrderManagement.API.Controllers
         public async Task<ActionResult<SalesOrderDto>> GetSalesOrderById(int id)
         {
             var salesOrder = await _salesOrderService.GetSalesOrderByIdAsync(id);
-            if (salesOrder == null)
-            {
-                return NotFound();
-            }
-            return Ok(salesOrder);
+            return salesOrder == null ? (ActionResult<SalesOrderDto>)NotFound() : (ActionResult<SalesOrderDto>)Ok(salesOrder);
         }
     }
 }
