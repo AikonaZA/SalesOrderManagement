@@ -1,13 +1,12 @@
 ﻿using SalesOrderManagement.Application.DTOs.SalesOrder;
 
-namespace SalesOrderManagement.Application.Interfaces
+namespace SalesOrderManagement.Application.Interfaces;
+
+public interface ISalesOrderService
 {
-    public interface ISalesOrderService
-    {
-        Task AddSalesOrderAsync(SalesOrderRequestDto salesOrderRequestDto);
+    Task AddSalesOrderAsync(SalesOrderRequestDto salesOrderRequestDto);
 
-        Task<IEnumerable<SalesOrderDto>> GetAllSalesOrdersAsync();
+    Task<IEnumerable<SalesOrderDto>> GetAllSalesOrdersAsync();
 
-        Task<SalesOrderDto> GetSalesOrderByIdAsync(int id);
-    }
+    Task<SalesOrderDto> GetSalesOrderByIdAsync(int id);
 }

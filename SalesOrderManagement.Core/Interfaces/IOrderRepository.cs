@@ -1,17 +1,16 @@
 ﻿using SalesOrderManagement.Core.Models.Domain;
 
-namespace SalesOrderManagement.Core.Interfaces
+namespace SalesOrderManagement.Core.Interfaces;
+
+public interface IOrderRepository
 {
-    public interface IOrderRepository
-    {
-        Task<IEnumerable<Order>> GetOrdersAsync();
+    Task<IEnumerable<Order>> GetOrdersAsync();
 
-        Task<Order> GetOrderByIdAsync(int id);
+    Task<Order> GetOrderByIdAsync(int id);
 
-        Task CreateOrderAsync(Order order);
+    Task CreateOrderAsync(Order order);
 
-        Task UpdateOrderAsync(Order order);
+    Task UpdateOrderAsync(Order order);
 
-        Task DeleteOrderAsync(int id);
-    }
+    Task DeleteOrderAsync(int id);
 }

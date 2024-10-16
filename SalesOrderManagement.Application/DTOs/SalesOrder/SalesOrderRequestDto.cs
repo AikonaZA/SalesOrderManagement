@@ -1,7 +1,6 @@
-﻿namespace SalesOrderManagement.Application.DTOs.SalesOrder
+﻿namespace SalesOrderManagement.Application.DTOs.SalesOrder;
+
+public class SalesOrderRequestDto
 {
-    public class SalesOrderRequestDto
-    {
-        public SalesOrderDto SalesOrder { get; set; }
-    }
+    public SalesOrderDto SalesOrder { get; set; }
 }
