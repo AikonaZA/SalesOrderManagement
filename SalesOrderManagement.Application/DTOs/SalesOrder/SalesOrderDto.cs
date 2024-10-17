@@ -2,6 +2,7 @@
 
 public class SalesOrderDto
 {
+    public int? Id { get; set; }
     public string SalesOrderRef { get; set; }
     public DateTime OrderDate { get; set; }
     public string Currency { get; set; }

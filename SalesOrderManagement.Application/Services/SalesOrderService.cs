@@ -8,32 +8,56 @@ namespace SalesOrderManagement.Application.Services;
 
 public class SalesOrderService(IOrderRepository orderRepository, IMapper mapper) : ISalesOrderService
 {
-
-    // Handles DTO to domain model mapping and adds the order
+    // Handles DTO to domain model mapping and adds the sales order
     public async Task AddSalesOrderAsync(SalesOrderRequestDto salesOrderRequestDto)
     {
-        // Check if the sales order or its reference is null or empty
         if (salesOrderRequestDto.SalesOrder == null || string.IsNullOrEmpty(salesOrderRequestDto.SalesOrder.SalesOrderRef))
-        {
-            throw new ArgumentException("SalesOrder or OrderRef cannot be null or empty.");
-        }
+            throw new ArgumentException("SalesOrder or SalesOrderRef cannot be null or empty.");
 
-        // Map DTO to the domain model and create the order
         var order = mapper.Map<Order>(salesOrderRequestDto.SalesOrder);
         await orderRepository.CreateOrderAsync(order);
     }
 
-    // Retrieve all sales orders
+    // Retrieves all sales orders
     public async Task<IEnumerable<SalesOrderDto>> GetAllSalesOrdersAsync()
     {
         var orders = await orderRepository.GetOrdersAsync();
         return mapper.Map<IEnumerable<SalesOrderDto>>(orders);
     }
 
-    // Retrieve a specific sales order by ID
+    // Retrieves a specific sales order by ID
     public async Task<SalesOrderDto> GetSalesOrderByIdAsync(int id)
     {
         var order = await orderRepository.GetOrderByIdAsync(id);
-        return mapper.Map<SalesOrderDto>(order);
+        return order == null ? throw new KeyNotFoundException($"SalesOrder with ID {id} not found.") : mapper.Map<SalesOrderDto>(order);
+    }
+
+    // Modifies an existing sales order
+    public async Task ModifySalesOrderAsync(SalesOrderDto salesOrderDto)
+    {
+        if (salesOrderDto == null || string.IsNullOrEmpty(salesOrderDto.SalesOrderRef))
+            throw new ArgumentException("SalesOrderDto or SalesOrderRef cannot be null or empty.");
+
+        // Ensure that the salesOrderDto.Id is not null before proceeding
+        if (!salesOrderDto.Id.HasValue)
+            throw new ArgumentException("SalesOrder ID cannot be null.");
+
+        int salesOrderID = salesOrderDto.Id.Value; // Safely extract the non-null int value
+
+        var existingOrder = await orderRepository.GetOrderByIdAsync(salesOrderID) ?? throw new KeyNotFoundException($"SalesOrder with ID {salesOrderID} not found.");
+
+        // Map the updated details from DTO to the existing order entity
+        var updatedOrder = mapper.Map(salesOrderDto, existingOrder);
+
+        await orderRepository.UpdateOrderAsync(updatedOrder);
+    }
+
+    // Removes a sales order by ID
+    public async Task RemoveSalesOrderAsync(int id)
+    {
+        _ = await orderRepository.GetOrderByIdAsync(id) ?? throw new KeyNotFoundException($"SalesOrder with ID {id} not found.");
+
+        // Directly use the provided id for deletion
+        await orderRepository.DeleteOrderAsync(id);
     }
 }
