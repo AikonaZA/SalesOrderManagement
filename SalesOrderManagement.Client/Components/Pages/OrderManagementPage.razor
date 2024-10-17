@@ -1,0 +1,50 @@
+﻿@page "/orders/manage"
+
+@inject HttpClient Http
+@inject NotificationService notification
+
+<h3>Order Management</h3>
+
+<RadzenTemplateForm Data="@salesOrder" TItem="SalesOrderDto" Submit="@HandleValidSubmit">
+    <RadzenFieldset Text="Order Details">
+        <RadzenTextBox @bind-Value="salesOrder.SalesOrderRef" Name="SalesOrderRef" Placeholder="Enter Sales Order Reference" />
+        <RadzenRequiredValidator Component="SalesOrderRef" Text="Sales Order Reference is required" />
+        <br />
+
+        <RadzenTextBox @bind-Value="salesOrder.Currency" Name="Currency" Placeholder="Enter Currency" />
+        <RadzenRequiredValidator Component="Currency" Text="Currency is required" />
+        <br />
+
+        <RadzenDatePicker @bind-Value="salesOrder.OrderDate" Name="OrderDate" Placeholder="Select Order Date" />
+        <RadzenRequiredValidator Component="OrderDate" Text="Order Date is required" />
+        <br />
+
+        <RadzenTextBox @bind-Value="salesOrder.CategoryCode" Name="CategoryCode" Placeholder="Enter Category Code" />
+        <RadzenRequiredValidator Component="CategoryCode" Text="Category Code is required" />
+        <br />
+
+        <RadzenDatePicker @bind-Value="salesOrder.ShipDate" Name="ShipDate" Placeholder="Select Ship Date" />
+    </RadzenFieldset>
+
+    <RadzenFieldset Text="Order Lines">
+        <RadzenDataGrid Data="@orderLines" TItem="SalesOrderLineDto" AllowPaging="true" PageSize="10">
+            <Columns>
+                <RadzenDataGridColumn TItem="SalesOrderLineDto" Property="SkuCode" Title="SKU Code" />
+                <RadzenDataGridColumn TItem="SalesOrderLineDto" Property="Description" Title="Description" />
+                <RadzenDataGridColumn TItem="SalesOrderLineDto" Property="Quantity" Title="Quantity" />
+                <RadzenDataGridColumn TItem="SalesOrderLineDto" Title="Actions">
+                    <Template Context="orderLine">
+                        <RadzenButton Text="Edit" Click="@(args => EditOrderLine(orderLine))" Icon="edit" />
+                        <RadzenButton Text="Delete" Click="@(args => DeleteOrderLine(orderLine))" Icon="delete" ButtonStyle="ButtonStyle.Danger" />
+                    </Template>
+                </RadzenDataGridColumn>
+            </Columns>
+        </RadzenDataGrid>
+
+        <RadzenButton Text="Add New Line" Click="AddOrderLine" Icon="add_circle" />
+    </RadzenFieldset>
+
+    <RadzenButton Text="Submit" ButtonType="ButtonType.Submit" Class="btn btn-primary" />
+</RadzenTemplateForm>
+
+<RadzenNotification />

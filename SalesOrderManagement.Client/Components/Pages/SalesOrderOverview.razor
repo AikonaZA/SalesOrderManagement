@@ -1,0 +1,58 @@
+﻿@page "/orders/overview"
+
+@inject HttpClient Http
+@inject NotificationService notification
+
+<h3>Sales Order Overview</h3>
+
+<!-- Search Section -->
+<RadzenFieldset Text="Search Orders">
+    <div class="row">
+        <div class="col-md-4">
+            <RadzenTextBox @bind-Value="searchOrderRef" Placeholder="Order Reference" />
+        </div>
+        <div class="col-md-4">
+            <RadzenTextBox @bind-Value="searchOrderType" Placeholder="Order Type" />
+        </div>
+        <div class="col-md-4">
+            <RadzenDatePicker @bind-Value="searchStartDate" Placeholder="Start Date" />
+            <RadzenDatePicker @bind-Value="searchEndDate" Placeholder="End Date" />
+        </div>
+    </div>
+    <RadzenButton Text="Search" Click="SearchOrders" Icon="search" Style="margin-top: 10px;" />
+</RadzenFieldset>
+
+<!-- Order Header Grid -->
+<RadzenDataGrid Data="@orderHeaders" TItem="SalesOrderDto" RowSelect="OnOrderSelected" AllowPaging="true" PageSize="10">
+    <Columns>
+        <RadzenDataGridColumn TItem="SalesOrderDto" Property="SalesOrderRef" Title="Order Reference" />
+        <RadzenDataGridColumn TItem="SalesOrderDto" Property="OrderType" Title="Order Type" />
+        <RadzenDataGridColumn TItem="SalesOrderDto" Property="OrderDate" Title="Order Date" FormatString="{0:MM/dd/yyyy}" />
+        <RadzenDataGridColumn TItem="SalesOrderDto" Title="Actions">
+            <Template Context="orderHeader">
+                <RadzenButton Text="Edit" Click="@(args => EditOrderHeader(orderHeader))" Icon="edit" />
+                <RadzenButton Text="Delete" Click="@(args => DeleteOrderHeader(orderHeader.Id))" Icon="delete" ButtonStyle="ButtonStyle.Danger" />
+                <RadzenButton Text="Details" Click="@(args => NavigateToOrderDetails(orderHeader.Id))" Icon="info" Style="margin-left: 10px;" />
+            </Template>
+        </RadzenDataGridColumn>
+    </Columns>
+</RadzenDataGrid>
+
+<!-- Order Lines Grid -->
+<RadzenFieldset Text="Order Lines" Visible="@showOrderLines">
+    <RadzenDataGrid Data="@orderLines" TItem="SalesOrderLineDto" AllowPaging="true" PageSize="10">
+        <Columns>
+            <RadzenDataGridColumn TItem="SalesOrderLineDto" Property="SkuCode" Title="SKU Code" />
+            <RadzenDataGridColumn TItem="SalesOrderLineDto" Property="Description" Title="Description" />
+            <RadzenDataGridColumn TItem="SalesOrderLineDto" Property="Quantity" Title="Quantity" />
+            <RadzenDataGridColumn TItem="SalesOrderLineDto" Title="Actions">
+                <Template Context="orderLine">
+                    <RadzenButton Text="Edit" Click="@(args => EditOrderLine(orderLine))" Icon="edit" />
+                    <RadzenButton Text="Delete" Click="@(args => DeleteOrderLine(orderLine))" Icon="delete" ButtonStyle="ButtonStyle.Danger" />
+                </Template>
+            </RadzenDataGridColumn>
+        </Columns>
+    </RadzenDataGrid>
+</RadzenFieldset>
+
+<RadzenNotification />

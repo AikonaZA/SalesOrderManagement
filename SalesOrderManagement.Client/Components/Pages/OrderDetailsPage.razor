@@ -1,0 +1,30 @@
+﻿@page "/orders/details/{id:int}"
+
+@inject NotificationService notification
+
+<h3>Order Details</h3>
+
+@if (order == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <RadzenFieldset Text="Order Information">
+        <RadzenTextBox @bind-Value="order.SalesOrderRef" Name="SalesOrderRef" Placeholder="Order Reference" Disabled="true" />
+        <RadzenTextBox @bind-Value="order.Currency" Name="Currency" Placeholder="Currency" Disabled="true" />
+        <RadzenTextBox @bind-Value="order.CategoryCode" Name="CategoryCode" Placeholder="Category Code" Disabled="true" />
+        <RadzenDatePicker @bind-Value="order.OrderDate" Name="OrderDate" Placeholder="Order Date" Disabled="true" />
+        <RadzenDatePicker @bind-Value="order.ShipDate" Name="ShipDate" Placeholder="Ship Date" Disabled="true" />
+    </RadzenFieldset>
+
+    <RadzenFieldset Text="Order Lines">
+        <RadzenDataGrid Data="@order.OrderLines" TItem="SalesOrderLineDto" AllowPaging="true" PageSize="10">
+            <Columns>
+                <RadzenDataGridColumn TItem="SalesOrderLineDto" Property="SkuCode" Title="SKU Code" />
+                <RadzenDataGridColumn TItem="SalesOrderLineDto" Property="Description" Title="Description" />
+                <RadzenDataGridColumn TItem="SalesOrderLineDto" Property="Quantity" Title="Quantity" />
+            </Columns>
+        </RadzenDataGrid>
+    </RadzenFieldset>
+}
