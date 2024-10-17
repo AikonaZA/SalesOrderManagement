@@ -1,11 +1,22 @@
 ﻿@inherits LayoutComponentBase
-<RadzenComponents @rendermode="InteractiveServer" />
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
 
-    <main>
+<RadzenLayout Style="height: 100vh;">
+    <!-- Header -->
+    <RadzenHeader>
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0">
+            <RadzenSidebarToggle Click="@(() => sidebarExpanded = !sidebarExpanded)" />
+
+            <RadzenLabel Text="Sales Order Management" Style="margin-left: 10px;" />
+        </RadzenStack>
+    </RadzenHeader>
+
+    <!-- Sidebar (Navigation Menu) -->
+    <RadzenSidebar @bind-Expanded="@sidebarExpanded" Style="background: linear-gradient(180deg, rgb(5, 39, 103), #3a0647 70%);">
+        <NavMenu />
+    </RadzenSidebar>
+
+    <!-- Main Content Area -->
+    <RadzenBody>
         <div class="top-row px-4">
             <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
         </div>
@@ -13,5 +24,16 @@
         <article class="content px-4">
             @Body
         </article>
-    </main>
-</div>
+    </RadzenBody>
+
+    <!-- Footer -->
+    <RadzenFooter>
+        <div class="px-4">
+            <p>&copy; 2024 - SalesOrderManagement.Client</p>
+        </div>
+    </RadzenFooter>
+</RadzenLayout>
+
+@code {
+    bool sidebarExpanded = true;
+}

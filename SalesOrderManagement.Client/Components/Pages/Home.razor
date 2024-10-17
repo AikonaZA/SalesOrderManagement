@@ -1,7 +1,29 @@
 ﻿@page "/"
 
+@inherits HomeBase
+
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+<!-- Welcome Section -->
+<RadzenCard>
+    <h1>Welcome to SalesOrderManagement.Client</h1>
+    <p>Your centralized hub for managing sales orders and associated details.</p>
 
-Welcome to your new app.
+    <RadzenButton Text="Get Started" Icon="play_arrow" Style="margin-top: 10px;" Click="NavigateToOverview" />
+</RadzenCard>
+
+<!-- Additional Features Section -->
+<RadzenGrid>
+    <Columns>
+        <RadzenGridColumn Title="Feature">
+            <Template Context="data">
+                <RadzenIcon Icon="check_circle" Style="color: green;" /> Easy Order Management
+            </Template>
+        </RadzenGridColumn>
+        <RadzenGridColumn Title="Description">
+            <Template Context="data">
+                A streamlined interface to manage your sales orders and view details in real time.
+            </Template>
+        </RadzenGridColumn>
+    </Columns>
+</RadzenGrid>
