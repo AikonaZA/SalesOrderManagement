@@ -1,6 +1,45 @@
-@SalesOrderManagement.API_HostAddress = http://localhost:5249
+@SalesOrderManagement.API_HostAddress = https://localhost:7150
 
-GET {{SalesOrderManagement.API_HostAddress}}/weatherforecast/
+### Get all Sales Orders
+GET {{SalesOrderManagement.API_HostAddress}}/api/salesorder
 Accept: application/json
 
 ###
+
+### Get Sales Order by ID
+GET {{SalesOrderManagement.API_HostAddress}}/api/salesorder/11
+Accept: application/json
+
+###
+
+### Create a new Sales Order
+POST {{SalesOrderManagement.API_HostAddress}}/api/salesorder
+Content-Type: application/json
+
+{
+  "salesOrder": {
+    "SalesOrderRef": "SO12345",
+    "OrderDate": "2024-10-10T00:00:00",
+    "Currency": "USD",
+    "CategoryCode": "ELECTRONICS"
+  }
+}
+
+###
+
+### Update an existing Sales Order
+PUT {{SalesOrderManagement.API_HostAddress}}/api/salesorder/1
+Content-Type: application/json
+
+{
+  "Id": 1,
+  "SalesOrderRef": "SO12345",
+  "OrderDate": "2024-10-12T00:00:00",
+  "Currency": "EUR",
+  "CategoryCode": "FURNITURE"
+}
+
+###
+
+### Delete a Sales Order by ID
+DELETE {{SalesOrderManagement.API_HostAddress}}/api/salesorder/1

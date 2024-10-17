@@ -1,22 +1,22 @@
 ﻿using Radzen;
-using SalesOrderManagement.Application.DTOs.Order;
+using SalesOrderManagement.Application.DTOs.SalesOrder;
 
 namespace SalesOrderManagement.Client.Components.Pages;
 
 public partial class OrderList
 {
-    private List<OrderDto> orders = [];
+    private List<SalesOrderDto> salesOrders = [];
 
     protected override async Task OnInitializedAsync()
     {
-        await LoadOrdersAsync();
+        await LoadSalesOrdersAsync();
     }
 
-    private async Task LoadOrdersAsync()
+    private async Task LoadSalesOrdersAsync()
     {
         try
         {
-            orders = await Http.GetFromJsonAsync<List<OrderDto>>("api/Order");
+            salesOrders = await Http.GetFromJsonAsync<List<SalesOrderDto>>("api/SalesOrder");
         }
         catch (Exception ex)
         {
@@ -24,28 +24,28 @@ public partial class OrderList
             {
                 Severity = NotificationSeverity.Error,
                 Summary = "Error",
-                Detail = $"Failed to load orders: {ex.Message}",
+                Detail = $"Failed to load sales orders: {ex.Message}",
                 Duration = 4000
             });
         }
     }
 
-    private void EditOrder(OrderDto order)
+    private void EditSalesOrder(SalesOrderDto salesOrder)
     {
-        // Implement the navigation logic to the edit page
+        // Implement the navigation logic to the edit page (e.g., NavigationManager.NavigateTo($"orders/edit/{salesOrder.Id}"))
     }
 
-    private async Task DeleteOrder(int id)
+    private async Task DeleteSalesOrder(int? id)
     {
         try
         {
-            await Http.DeleteAsync($"api/order/{id}");
-            await LoadOrdersAsync();
+            await Http.DeleteAsync($"api/salesorder/{id}");
+            await LoadSalesOrdersAsync();
             notification.Notify(new NotificationMessage
             {
                 Severity = NotificationSeverity.Success,
                 Summary = "Deleted",
-                Detail = "Order deleted successfully.",
+                Detail = "Sales order deleted successfully.",
                 Duration = 4000
             });
         }
@@ -55,7 +55,7 @@ public partial class OrderList
             {
                 Severity = NotificationSeverity.Error,
                 Summary = "Error",
-                Detail = $"Failed to delete order: {ex.Message}",
+                Detail = $"Failed to delete sales order: {ex.Message}",
                 Duration = 4000
             });
         }

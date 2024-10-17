@@ -14,7 +14,6 @@ public static class ServiceCollectionExtensions
         services.AddAutoMapper(typeof(MappingProfile));
 
         // Register the application services
-        services.AddScoped<IOrderService, OrderService>();
         services.AddScoped<ISalesOrderService, SalesOrderService>();
 
         // Add any other services, e.g., logging, caching, etc.
