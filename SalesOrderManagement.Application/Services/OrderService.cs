@@ -7,9 +7,9 @@ using SalesOrderManagement.Core.Models.Domain;
 
 namespace SalesOrderManagement.Application.Services;
 
+[Obsolete("Order Service is unused and SalesOrder Service will be used going forward")]
 public class OrderService(IOrderRepository orderRepository, IMapper mapper) : IOrderService
 {
-
     // Returns DTOs by mapping domain models to DTOs
     public async Task<IEnumerable<OrderDto>> GetAllOrdersAsync()
     {

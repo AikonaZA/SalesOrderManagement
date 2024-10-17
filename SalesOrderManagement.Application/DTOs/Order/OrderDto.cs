@@ -1,5 +1,5 @@
 ﻿namespace SalesOrderManagement.Application.DTOs.Order;
-
+[Obsolete("Order DTO to be replaced with SalesOrder DTO")]
 public class OrderDto
 {
     public int Id { get; set; }

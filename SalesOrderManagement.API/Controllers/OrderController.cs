@@ -4,6 +4,7 @@ using SalesOrderManagement.Application.Interfaces;
 
 namespace SalesOrderManagement.API.Controllers;
 
+[Obsolete("Order Controller is unused and SalesOrder Controller will be used going forward")]
 [ApiController]
 [Route("api/[controller]")]
 public class OrderController(IOrderService orderService) : ControllerBase
