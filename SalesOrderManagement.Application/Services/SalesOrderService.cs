@@ -9,7 +9,7 @@ namespace SalesOrderManagement.Application.Services;
 public class SalesOrderService(IOrderRepository orderRepository, IMapper mapper) : ISalesOrderService
 {
     // Handles DTO to domain model mapping and adds the sales order
-    public async Task AddSalesOrderAsync(SalesOrderRequestDto salesOrderRequestDto)
+    public async Task CreateSalesOrderAsync(SalesOrderRequestDto salesOrderRequestDto)
     {
         if (salesOrderRequestDto.SalesOrder == null || string.IsNullOrEmpty(salesOrderRequestDto.SalesOrder.SalesOrderRef))
             throw new ArgumentException("SalesOrder or SalesOrderRef cannot be null or empty.");
@@ -19,7 +19,7 @@ public class SalesOrderService(IOrderRepository orderRepository, IMapper mapper)
     }
 
     // Retrieves all sales orders
-    public async Task<IEnumerable<SalesOrderDto>> GetAllSalesOrdersAsync()
+    public async Task<IEnumerable<SalesOrderDto>> GetSalesOrdersAsync()
     {
         var orders = await orderRepository.GetOrdersAsync();
         return mapper.Map<IEnumerable<SalesOrderDto>>(orders);
@@ -33,7 +33,7 @@ public class SalesOrderService(IOrderRepository orderRepository, IMapper mapper)
     }
 
     // Modifies an existing sales order
-    public async Task ModifySalesOrderAsync(SalesOrderDto salesOrderDto)
+    public async Task UpdateSalesOrderAsync(SalesOrderDto salesOrderDto)
     {
         if (salesOrderDto == null || string.IsNullOrEmpty(salesOrderDto.SalesOrderRef))
             throw new ArgumentException("SalesOrderDto or SalesOrderRef cannot be null or empty.");
@@ -53,7 +53,7 @@ public class SalesOrderService(IOrderRepository orderRepository, IMapper mapper)
     }
 
     // Removes a sales order by ID
-    public async Task RemoveSalesOrderAsync(int id)
+    public async Task DeleteSalesOrderAsync(int id)
     {
         _ = await orderRepository.GetOrderByIdAsync(id) ?? throw new KeyNotFoundException($"SalesOrder with ID {id} not found.");
 

@@ -1,61 +1,76 @@
-﻿using SalesOrderManagement.Application.DTOs.SalesOrder;
+﻿using Carter;
+using SalesOrderManagement.Application.DTOs.SalesOrder;
 using SalesOrderManagement.Application.Interfaces;
 
 namespace SalesOrderManagement.API.Endpoints.SalesOrder;
 
-public static class SalesOrderEndpoints
+public class SalesOrderEndpoints : ICarterModule
 {
-    public static void MapSalesOrderEndpoints(this IEndpointRouteBuilder endpoints)
+    public void AddRoutes(IEndpointRouteBuilder app)
     {
-        endpoints.MapPost("/api/salesorder", async (ISalesOrderService salesOrderService, SalesOrderRequestDto salesOrderRequestDto) =>
-        {
-            if (salesOrderRequestDto == null)
-                return Results.BadRequest("Sales order data is required.");
+        var group = app.MapGroup("/api/salesorder");
 
-            await salesOrderService.AddSalesOrderAsync(salesOrderRequestDto);
+        group.MapPost("", CreateSalesOrder).WithName(nameof(CreateSalesOrder));
 
-            return Results.Created($"/api/salesorder/{salesOrderRequestDto.SalesOrder.SalesOrderRef}", salesOrderRequestDto);
-        });
+        group.MapGet("", GetSalesOrders).WithName(nameof(GetSalesOrders));
 
-        endpoints.MapGet("/api/salesorder", async (ISalesOrderService salesOrderService) =>
-        {
-            var salesOrders = await salesOrderService.GetAllSalesOrdersAsync();
+        group.MapGet("{id}", GetSalesOrder).WithName(nameof(GetSalesOrder));
 
-            return salesOrders == null || !salesOrders.Any() ? Results.NoContent() : Results.Ok(salesOrders);
-        });
+        group.MapPut("{id}", UpdateSalesOrder).WithName(nameof(UpdateSalesOrder));
 
-        endpoints.MapGet("/api/salesorder/{id:int}", async (ISalesOrderService salesOrderService, int id) =>
-        {
-            var salesOrder = await salesOrderService.GetSalesOrderByIdAsync(id);
+        group.MapDelete("{id}", DeleteSalesOrder).WithName(nameof(DeleteSalesOrder));
+    }
 
-            return salesOrder == null
-                ? Results.NotFound($"Sales order with ID {id} not found.")
-                : Results.Ok(salesOrder);
-        });
+    public static async Task<IResult> CreateSalesOrder(ISalesOrderService salesOrderService, SalesOrderRequestDto salesOrderRequestDto)
+    {
+        if (salesOrderRequestDto == null)
+            return Results.BadRequest("Sales order data is required.");
 
-        endpoints.MapPut("/api/salesorder/{id:int}", async (ISalesOrderService salesOrderService, int id, SalesOrderDto salesOrderDto) =>
-        {
-            if (id != salesOrderDto.Id)
-                return Results.BadRequest("Sales order ID mismatch.");
+        await salesOrderService.CreateSalesOrderAsync(salesOrderRequestDto);
 
-            var existingOrder = await salesOrderService.GetSalesOrderByIdAsync(id);
-            if (existingOrder == null)
-                return Results.NotFound($"Sales order with ID {id} not found.");
+        return Results.Created($"/api/salesorder/{salesOrderRequestDto.SalesOrder.SalesOrderRef}", salesOrderRequestDto);
+    }
 
-            await salesOrderService.ModifySalesOrderAsync(salesOrderDto);
+    public static async Task<IResult> GetSalesOrders(ISalesOrderService salesOrderService)
+    {
+        var salesOrders = await salesOrderService.GetSalesOrdersAsync();
 
-            return Results.NoContent();
-        });
+        return salesOrders == null || !salesOrders.Any() 
+            ? Results.NoContent() 
+            : Results.Ok(salesOrders);
+    }
 
-        endpoints.MapDelete("/api/salesorder/{id:int}", async (ISalesOrderService salesOrderService, int id) =>
-        {
-            var salesOrder = await salesOrderService.GetSalesOrderByIdAsync(id);
-            if (salesOrder == null)
-                return Results.NotFound($"Sales order with ID {id} not found.");
+    public static async Task<IResult> GetSalesOrder(ISalesOrderService salesOrderService, int id)
+    {
+        var salesOrder = await salesOrderService.GetSalesOrderByIdAsync(id);
 
-            await salesOrderService.RemoveSalesOrderAsync(id);
+        return salesOrder == null
+            ? Results.NotFound($"Sales order with ID {id} not found.")
+            : Results.Ok(salesOrder);
+    }
 
-            return Results.NoContent();
-        });
+    public static async Task<IResult> UpdateSalesOrder(ISalesOrderService salesOrderService, int id, SalesOrderDto salesOrderDto)
+    {
+        if (id != salesOrderDto.Id)
+            return Results.BadRequest("Sales order ID mismatch.");
+
+        var existingOrder = await salesOrderService.GetSalesOrderByIdAsync(id);
+        if (existingOrder == null)
+            return Results.NotFound($"Sales order with ID {id} not found.");
+
+        await salesOrderService.UpdateSalesOrderAsync(salesOrderDto);
+
+        return Results.NoContent();
+    }
+
+    public static async Task<IResult> DeleteSalesOrder(ISalesOrderService salesOrderService, int id)
+    {
+        var salesOrder = await salesOrderService.GetSalesOrderByIdAsync(id);
+        if (salesOrder == null)
+            return Results.NotFound($"Sales order with ID {id} not found.");
+
+        await salesOrderService.DeleteSalesOrderAsync(id);
+
+        return Results.NoContent();
     }
 }

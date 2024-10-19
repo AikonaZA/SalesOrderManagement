@@ -9,13 +9,13 @@ public interface ISalesOrderService
     /// </summary>
     /// <param name="salesOrderRequestDto"></param>
     /// <returns></returns>
-    Task AddSalesOrderAsync(SalesOrderRequestDto salesOrderRequestDto);
+    Task CreateSalesOrderAsync(SalesOrderRequestDto salesOrderRequestDto);
 
     /// <summary>
     /// Retrieves all sales orders
     /// </summary>
     /// <returns></returns>
-    Task<IEnumerable<SalesOrderDto>> GetAllSalesOrdersAsync();
+    Task<IEnumerable<SalesOrderDto>> GetSalesOrdersAsync();
 
     /// <summary>
     /// Retrieves a sales order by ID
@@ -29,12 +29,12 @@ public interface ISalesOrderService
     /// </summary>
     /// <param name="salesOrderDto"></param>
     /// <returns></returns>
-    Task ModifySalesOrderAsync(SalesOrderDto salesOrderDto);
+    Task UpdateSalesOrderAsync(SalesOrderDto salesOrderDto);
 
     /// <summary>
     /// Removes a sales order by ID
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    Task RemoveSalesOrderAsync(int id);
+    Task DeleteSalesOrderAsync(int id);
 }

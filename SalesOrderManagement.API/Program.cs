@@ -1,4 +1,4 @@
-using SalesOrderManagement.API.Endpoints.SalesOrder;
+using Carter;
 using SalesOrderManagement.Application.Extensions;
 using SalesOrderManagement.Infrastructure.Extensions;
 using SalesOrderManagement.ServiceDefaults;
@@ -12,11 +12,12 @@ builder.AddServiceDefaults();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 // Register services for each layer using extensions
+builder.Services.AddCarter();
 builder.Services.AddApplicationLayer();
 builder.Services.AddInfrastructureLayer(connectionString);
 builder.Services.AddAuthorization();
 // Add Swagger for API documentation
-builder.Services.AddEndpointsApiExplorer();
+//builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
@@ -40,7 +41,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 // Map minimal API endpoints
-app.MapSalesOrderEndpoints(); // Register the SalesOrder minimal APIs
+app.MapCarter();
 
 // Run the application
 app.Run();
