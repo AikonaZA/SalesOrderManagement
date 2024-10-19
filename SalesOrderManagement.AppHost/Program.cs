@@ -4,4 +4,4 @@ builder.AddProject<Projects.SalesOrderManagement_Client>("SalesOrderManagement-C
 
 builder.AddProject<Projects.SalesOrderManagement_API>("SalesOrderManagement-API");
 
-builder.Build().Run();
+await builder.Build().RunAsync();

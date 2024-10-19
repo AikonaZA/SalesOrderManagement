@@ -10,7 +10,7 @@ public partial class OrderManagementPage
         OrderLines = []
     };
 
-    private List<SalesOrderLineDto> orderLines => salesOrder.OrderLines;
+    private List<SalesOrderLineDto> OrderLines => salesOrder.OrderLines;
 
     private async Task HandleValidSubmit()
     {
@@ -28,7 +28,7 @@ public partial class OrderManagementPage
 
     private void AddOrderLine()
     {
-        orderLines.Add(new SalesOrderLineDto());
+        OrderLines.Add(new SalesOrderLineDto());
     }
 
     private void EditOrderLine(SalesOrderLineDto orderLine)
@@ -38,6 +38,6 @@ public partial class OrderManagementPage
 
     private void DeleteOrderLine(SalesOrderLineDto orderLine)
     {
-        orderLines.Remove(orderLine);
+        OrderLines.Remove(orderLine);
     }
 }

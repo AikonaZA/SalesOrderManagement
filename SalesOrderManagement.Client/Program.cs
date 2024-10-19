@@ -40,4 +40,4 @@ app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 //.AddInteractiveWebAssemblyRenderMode();
 
-app.Run();
+await app.RunAsync();

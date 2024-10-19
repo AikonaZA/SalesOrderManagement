@@ -44,4 +44,4 @@ app.UseAuthorization();
 app.MapCarter();
 
 // Run the application
-app.Run();
+await app.RunAsync();
